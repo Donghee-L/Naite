@@ -41,12 +41,11 @@ public class UserController {
     private final EmailService emailService;
     private final JwtService jwtService;
 
-    @PostMapping("/signin")
+    @PostMapping("/sign/signin")
     @ApiOperation(value = "회원 로그인")
     public ResponseEntity<Map<String,Object>> signin(@RequestBody UserSignInRequestDto userSignInRequestDto, HttpServletResponse res){
         Map<String,Object> resultMap = new HashMap<>();
         HttpStatus status = null;
-
         try{
             User loginUser = userService.signin(userSignInRequestDto);
             if(loginUser!=null) {
@@ -85,7 +84,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/signup")
+    @PostMapping("/sign/signup")
     @ApiOperation(value = "회원가입")
     public Response save(@RequestBody UserSignUpRequestDto userSignUpRequestDto) {
         try {
@@ -98,7 +97,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/email/send")
+    @PostMapping("/sign/email/send")
     @ApiOperation(value = "이메일 인증 코드 전송")
     public Response emailSend(@RequestBody EmailSendRequestDto emailSendRequestDto) throws MessagingException {
         // 회원가입 시 이메일 인증일 경우
@@ -178,7 +177,7 @@ public class UserController {
 //        }
     }
 
-    @GetMapping("/email/auth")
+    @GetMapping("/sign/email/auth")
     @ApiOperation(value = "이메일 인증")
     public Response update(@RequestParam("email") String userEmail, @RequestParam("key") String certified) throws Exception{
         // auth_key에 있는 값과 비교

@@ -30,7 +30,7 @@ public class UserService {
             User user = existed.get();
             // salt 해독
             String salt = user.getUserSalt();
-            String password = saltUtil.encodePassword(salt, user.getUserPw());
+            String password = saltUtil.encodePassword(salt, requestDto.getUserPw());
             // 비밀번호 일치여부 확인
             if (!user.getUserPw().equals(password)) throw new Exception("비밀번호가 일치하지 않습니다.");
             return user;
