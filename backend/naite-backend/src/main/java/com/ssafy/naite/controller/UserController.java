@@ -197,4 +197,16 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "비밀번호 재설정", notes = "사용자의 인증 후 비밀번호를 재설정합니다.")
+    @PutMapping("/sign/password/{userId}")
+    public ResponseEntity<String> updatePassword(@PathVariable String userId,@RequestBody PwUpdateRequestDto pwUpdateRequestDto) {
+        try {
+            User user = userService.updateUserPw(userId, pwUpdateRequestDto);
+            authKeyService.save(new AuthKeySaveRequestDto(user, "empty", 1));
+            return new ResponseEntity<String>("비밀번호 재설정 완료", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("비밀번호 재설정 실패", HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
 }
