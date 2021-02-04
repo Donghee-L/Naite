@@ -186,4 +186,15 @@ public class UserController {
         }
     }
 
+    @GetMapping("/sign/{userEmail}")
+    @ApiOperation(value = "아이디 찾기", notes = "이메일을 조회하여 사용자 아이디를 조회합니다.")
+    public ResponseEntity<String> findUserIdByEmail(@PathVariable String userEmail) throws Exception {
+        try {
+            User user = userService.findByEmail(userEmail);
+            return new ResponseEntity<String>(user.getUserId(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("아이디 찾기 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
